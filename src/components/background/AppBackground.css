@@ -1,0 +1,74 @@
+.app-background {
+  min-height: 100vh;
+  background: var(--background);
+  isolation: isolate;
+}
+
+.background-blobs {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.blob {
+  position: absolute;
+  width: clamp(250px, 45vw, 650px);
+  aspect-ratio: 1;
+  border-radius: 40% 60% 65% 35% / 55% 40% 60% 45%;
+}
+
+.blob-blue {
+  top: -20%;
+  right: -10%;
+  border-radius: 0;
+  overflow: visible;
+}
+
+.blob-fill {
+  fill: var(--dusty-powder-blue);
+  opacity: 0.6;
+}
+
+.blob-outline {
+  fill: none;
+  stroke: var(--dusty-powder-blue);
+  stroke-width: 1;
+}
+
+.background-waves {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: clamp(360px, 65vw, 1000px);
+  height: clamp(180px, 30vh, 340px);
+}
+
+.wave {
+  position: absolute;
+  width: 120%;
+  height: 180%;
+  border-radius: 48% 70% 0 0 / 45% 65% 0 0;
+  transform: rotate(12deg);
+}
+
+.wave-blue {
+  top: 30%;
+  left: -25%;
+  background: var(--dusty-powder-blue);
+  opacity: 0.6;
+}
+
+.wave-plum {
+  top: 20%;
+  left: -55%;
+  border: 1px solid var(--muted-plum);
+}
+
+@media (max-width: 600px) {
+  .background-waves {
+    width: 90vw;
+    height: 150px;
+  }
+}

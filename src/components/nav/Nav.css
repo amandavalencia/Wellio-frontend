@@ -1,0 +1,35 @@
+﻿.navbar {
+  z-index: 100;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: clamp(100px, 20vw, 240px);
+  justify-content: start;
+  padding: 2rem 1rem;
+  margin-left: 15px;
+  background-color: rgba(253, 253, 252, 0.6);
+  border-radius: 10px;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  height: fit-content;
+}
+
+.nav-links a {
+  display: inline-block;
+  padding: 4px 8px;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+  border-radius: 10px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background-color: var(--dusty-powder-blue-light);
+}
