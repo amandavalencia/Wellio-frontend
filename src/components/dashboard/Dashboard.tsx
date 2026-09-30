@@ -73,6 +73,7 @@ const analyses = [
 
 export function Dashboard() {
   const [formType, setFormType] = useState<string | null>(null);
+  console.log("formType", formType);
   const openForm = (type: string) => {
     setFormType(type);
   };

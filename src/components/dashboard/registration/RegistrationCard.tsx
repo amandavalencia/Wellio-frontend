@@ -14,6 +14,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../../ui/card";
+import { ActivityRegistration } from "./ActivityRegistration";
+import { SleepRegistration } from "./SleepRegistration";
+import { MoodRegistration } from "./MoodRegistration";
 
 type summariesProps = {
   title: string;
@@ -58,7 +61,9 @@ export const RegistrationCard = ({
                 Fyll i information om uppgiften.
               </DialogDescription>
             </DialogHeader>
-            {/* Ditt formulär här */}
+            {summary.type === "activity" && <ActivityRegistration />}
+            {summary.type === "sleep" && <SleepRegistration />}
+            {summary.type === "mood" && <MoodRegistration />}
           </DialogContent>
         </Dialog>
       </CardContent>
