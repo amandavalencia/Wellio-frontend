@@ -2,10 +2,21 @@
 import { Button } from "../components/ui/button";
 import { LoginForm } from "../components/auth/LoginForm";
 import { SignupForm } from "../components/auth/SignupForm";
+import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
   const [isLogin, setIsLogin] = useState(true);
-
+  const { user } = useAuth();
+  if (user) {
+    return (
+      <section
+        className="flex min-h-svh items-center justify-center px-3 py-10 sm:px-6 sm:py-16"
+        aria-labelledby="login-title"
+      >
+        <p>Välkommen, {user.email}!</p>
+      </section>
+    );
+  }
   return (
     <section
       className="flex min-h-svh items-center justify-center px-3 py-10 sm:px-6 sm:py-16"

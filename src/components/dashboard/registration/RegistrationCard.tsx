@@ -17,6 +17,7 @@ import {
 import { ActivityRegistration } from "./ActivityRegistration";
 import { SleepRegistration } from "./SleepRegistration";
 import { MoodRegistration } from "./MoodRegistration";
+import { useAuth } from "../../../hooks/useAuth";
 
 type summariesProps = {
   title: string;
@@ -27,13 +28,10 @@ type summariesProps = {
 };
 type RegisrationCardProps = {
   summary: summariesProps;
-  onOpenForm: () => void;
 };
 
-export const RegistrationCard = ({
-  summary,
-  onOpenForm,
-}: RegisrationCardProps) => {
+export const RegistrationCard = ({ summary }: RegisrationCardProps) => {
+  const { user } = useAuth();
   return (
     <Card key={summary.title} className="dashboard-card dashboard-summary">
       <CardHeader>
@@ -48,24 +46,28 @@ export const RegistrationCard = ({
         <CardDescription>{summary.description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="w-fit" onClick={onOpenForm}>
-              Registrera ny {summary.title.toLowerCase()}
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Lägg till uppgift</DialogTitle>
-              <DialogDescription>
-                Fyll i information om uppgiften.
-              </DialogDescription>
-            </DialogHeader>
-            {summary.type === "activity" && <ActivityRegistration />}
-            {summary.type === "sleep" && <SleepRegistration />}
-            {summary.type === "mood" && <MoodRegistration />}
-          </DialogContent>
-        </Dialog>
+        {user ? (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button className="w-fit">
+                Registrera ny {summary.title.toLowerCase()}
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Lägg till uppgift</DialogTitle>
+                <DialogDescription>
+                  Fyll i information om uppgiften.
+                </DialogDescription>
+              </DialogHeader>
+              {summary.type === "activity" && <ActivityRegistration />}
+              {summary.type === "sleep" && <SleepRegistration />}
+              {summary.type === "mood" && <MoodRegistration />}
+            </DialogContent>
+          </Dialog>
+        ) : (
+          `Logga in för att registrera ${summary.title.toLowerCase()}`
+        )}
       </CardContent>
     </Card>
   );

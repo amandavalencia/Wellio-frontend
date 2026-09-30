@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+﻿import { useAuth } from "../../hooks/useAuth";
 import {
   Card,
   CardContent,
@@ -72,22 +72,13 @@ const analyses = [
 ];
 
 export function Dashboard() {
-  const [formType, setFormType] = useState<string | null>(null);
-  console.log("formType", formType);
-  const openForm = (type: string) => {
-    setFormType(type);
-  };
-
+  const { user } = useAuth();
   return (
     <section className="dashboard" aria-labelledby="dashboard-title">
-      <DashboardHeader />
+      {user && <DashboardHeader />}
       <div className="dashboard-summary-grid">
         {summaries.map((summary) => (
-          <RegistrationCard
-            summary={summary}
-            onOpenForm={() => openForm(summary.type)}
-            key={summary.title}
-          />
+          <RegistrationCard summary={summary} key={summary.title} />
         ))}
       </div>
       <div className="dashboard-section-heading">
