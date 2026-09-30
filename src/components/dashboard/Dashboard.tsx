@@ -1,4 +1,5 @@
-﻿import {
+﻿import { useState } from "react";
+import {
   Card,
   CardContent,
   CardDescription,
@@ -6,31 +7,44 @@
   CardTitle,
 } from "../ui/card";
 import "./Dashboard.css";
+import { DashboardHeader } from "./DashboardHeader";
+import { RegistrationCard } from "./registration/RegistrationCard";
 
-const summaries = [
+type summariesType = {
+  title: string;
+  description: string;
+  unit: string;
+  icon: string;
+  type: string;
+};
+const summaries: summariesType[] = [
   {
     title: "Humör",
     description: "Hur mår du idag?",
     unit: "Ingen registrering ännu",
     icon: "☺",
+    type: "mood",
   },
   {
     title: "Sömn",
     description: "Senaste natten",
     unit: "timmar sömn",
     icon: "☾",
+    type: "sleep",
   },
   {
     title: "Aktivitet",
     description: "Din rörelse idag",
     unit: "steg idag",
     icon: "↗",
+    type: "activity",
   },
   {
     title: "Vanor",
     description: "Dagens framsteg",
     unit: "vanor registrerade",
     icon: "✓",
+    type: "habits",
   },
 ];
 
@@ -58,40 +72,21 @@ const analyses = [
 ];
 
 export function Dashboard() {
+  const [formType, setFormType] = useState<string | null>(null);
+  const openForm = (type: string) => {
+    setFormType(type);
+  };
+
   return (
     <section className="dashboard" aria-labelledby="dashboard-title">
-      <header className="dashboard-header">
-        <div>
-          <p className="dashboard-eyebrow">Välkommen tillbaka</p>
-          <h1 id="dashboard-title">
-            Amanda
-            <span className="dashboard-sun" aria-hidden="true">
-              ☀
-            </span>
-          </h1>
-        </div>
-      </header>
+      <DashboardHeader />
       <div className="dashboard-summary-grid">
-        {summaries.map(({ title, description, unit, icon }) => (
-          <Card key={title} className="dashboard-card dashboard-summary">
-            <CardHeader>
-              <CardTitle>
-                <h2 className="dashboard-card-title">
-                  <span className="dashboard-icon" aria-hidden="true">
-                    {icon}
-                  </span>
-                  {title}
-                </h2>
-              </CardTitle>
-              <CardDescription>{description}</CardDescription>
-            </CardHeader>
-            <CardContent className="dashboard-summary-value">
-              <span className="dashboard-value" aria-label="Ingen data">
-                —
-              </span>
-              <span>{unit}</span>
-            </CardContent>
-          </Card>
+        {summaries.map((summary) => (
+          <RegistrationCard
+            summary={summary}
+            onOpenForm={() => openForm(summary.type)}
+            key={summary.title}
+          />
         ))}
       </div>
       <div className="dashboard-section-heading">
