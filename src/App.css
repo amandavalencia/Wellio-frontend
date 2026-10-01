@@ -16,6 +16,12 @@
   min-width: 0;
 }
 
+@media (width < 768px) {
+  .app-layout {
+    flex-direction: column;
+  }
+}
+
 .page-content {
   width: min(100%, 960px);
   padding: clamp(2rem, 8vw, 6rem) 1.5rem;
