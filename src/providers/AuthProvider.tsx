@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { User } from "../types/User";
-import { AuthContext } from "./AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import {
   getCurrentUser,
   loginWithCookie,

@@ -1,26 +1,12 @@
-﻿import { useEffect, useState } from "react";
-import { useAuth } from "./useAuth";
-import { getActivities } from "../service/activityService";
-import type { Activity } from "../types/Activity";
+﻿import { useContext } from "react";
+import { ActivitiesContext } from "../context/ActivitiesContext";
 
-export function useActivities() {
-  const { user, loading } = useAuth();
-  const [activities, setActivities] = useState<Activity[]>([]);
+export const useActivities = () => {
+  const context = useContext(ActivitiesContext);
 
-  useEffect(() => {
-    if (loading || !user) return;
+  if (!context) {
+    throw new Error("useActivities must be used within an ActivitiesProvider");
+  }
 
-    const fetchActivities = async () => {
-      const allActivities = await getActivities();
-      setActivities(allActivities);
-    };
-
-    fetchActivities();
-  }, [loading, user]);
-
-  const handleActivityCreated = (activity: Activity) => {
-    setActivities((current) => [...current, activity]);
-  };
-
-  return { activities, handleActivityCreated };
-}
+  return context;
+};

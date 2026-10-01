@@ -8,9 +8,6 @@ type AuthContextType = {
   signUp: (email: string, password: string) => Promise<void>;
 };
 
-export const AuthContext = createContext<AuthContextType>({
-  user: null,
-  loading: true,
-  signIn: async () => {},
-  signUp: async () => {},
-});
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined,
+);
