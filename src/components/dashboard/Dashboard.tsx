@@ -1,14 +1,9 @@
 ﻿import { useAuth } from "../../hooks/useAuth";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../ui/card";
 import "./Dashboard.css";
 import { DashboardHeader } from "./DashboardHeader";
 import { RegistrationCard } from "./registration/RegistrationCard";
+import { ActivityInsightsCard } from "./insights/ActivityInsightsCard";
+import { useActivities } from "../../hooks/useActivities";
 
 type summariesType = {
   title: string;
@@ -48,37 +43,19 @@ const summaries: summariesType[] = [
   },
 ];
 
-const analyses = [
-  {
-    title: "Ditt humör över tid",
-    description: "Lär känna hur ditt mående förändras.",
-    empty: "Här visas dina humörregistreringar när det finns data.",
-  },
-  {
-    title: "Din sömn",
-    description: "En överblick över dina nätter och din återhämtning.",
-    empty: "Här visas dina sömnmönster när det finns data.",
-  },
-  {
-    title: "Rörelse i vardagen",
-    description: "Följ din aktivitet över tid.",
-    empty: "Här visas din aktivitet när det finns data.",
-  },
-  {
-    title: "Små vanor, stora framsteg",
-    description: "Se hur dina rutiner utvecklas.",
-    empty: "Här visas dina vanor när det finns data.",
-  },
-];
-
 export function Dashboard() {
   const { user } = useAuth();
+  const { activities, handleActivityCreated } = useActivities();
   return (
     <section className="dashboard" aria-labelledby="dashboard-title">
       {user && <DashboardHeader />}
       <div className="dashboard-summary-grid">
         {summaries.map((summary) => (
-          <RegistrationCard summary={summary} key={summary.title} />
+          <RegistrationCard
+            summary={summary}
+            onActivityCreated={handleActivityCreated}
+            key={summary.title}
+          />
         ))}
       </div>
       <div className="dashboard-section-heading">
@@ -86,45 +63,7 @@ export function Dashboard() {
         <p>Plats för dina mönster, din balans och dina framsteg.</p>
       </div>
       <div className="dashboard-analysis-grid">
-        {analyses.map(({ title, description, empty }) => (
-          <Card key={title} className="dashboard-card">
-            <CardHeader>
-              <CardTitle>
-                <h3 className="dashboard-card-title">{title}</h3>
-              </CardTitle>
-              <CardDescription>{description}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="dashboard-empty">
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <rect
-                    x="5"
-                    y="5"
-                    width="30"
-                    height="30"
-                    rx="9"
-                    stroke="currentColor"
-                    opacity=".3"
-                  />
-                  <path
-                    d="M12 26v-6m8 6V13m8 13v-9"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                <strong>Ingen data ännu</strong>
-                <p>{empty}</p>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+        <ActivityInsightsCard activities={activities} />
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ import { Button } from "../../ui/button";
 import { Input } from "../../ui/input";
 import { Field, FieldLabel, FieldError } from "../../ui/field";
 import { createActivity } from "../../../service/activityService";
+import type { Activity } from "../../../types/Activity";
 
 const activitySchema = z
   .object({
@@ -29,8 +30,12 @@ const activitySchema = z
   });
 
 type ActivityFormValues = z.infer<typeof activitySchema>;
-
-export const ActivityRegistration = () => {
+type ActivityRegistrationProps = {
+  onActivityCreated: (activity: Activity) => void;
+};
+export const ActivityRegistration = ({
+  onActivityCreated,
+}: ActivityRegistrationProps) => {
   const {
     handleSubmit,
     register,
@@ -47,10 +52,11 @@ export const ActivityRegistration = () => {
   });
   const onSubmit = async (data: ActivityFormValues) => {
     const { hours, minutes, ...activity } = data;
-    await createActivity({
+    const newActivity = await createActivity({
       ...activity,
       durationMinutes: hours * 60 + minutes,
     });
+    onActivityCreated(newActivity);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate>

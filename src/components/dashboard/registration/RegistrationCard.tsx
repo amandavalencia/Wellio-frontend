@@ -18,6 +18,7 @@ import { ActivityRegistration } from "./ActivityRegistration";
 import { SleepRegistration } from "./SleepRegistration";
 import { MoodRegistration } from "./MoodRegistration";
 import { useAuth } from "../../../hooks/useAuth";
+import type { Activity } from "../../../types/Activity";
 
 type summariesProps = {
   title: string;
@@ -28,9 +29,13 @@ type summariesProps = {
 };
 type RegisrationCardProps = {
   summary: summariesProps;
+  onActivityCreated: (activity: Activity) => void;
 };
 
-export const RegistrationCard = ({ summary }: RegisrationCardProps) => {
+export const RegistrationCard = ({
+  summary,
+  onActivityCreated,
+}: RegisrationCardProps) => {
   const { user } = useAuth();
   return (
     <Card key={summary.title} className="dashboard-card dashboard-summary">
@@ -60,7 +65,9 @@ export const RegistrationCard = ({ summary }: RegisrationCardProps) => {
                   Fyll i information om uppgiften.
                 </DialogDescription>
               </DialogHeader>
-              {summary.type === "activity" && <ActivityRegistration />}
+              {summary.type === "activity" && (
+                <ActivityRegistration onActivityCreated={onActivityCreated} />
+              )}
               {summary.type === "sleep" && <SleepRegistration />}
               {summary.type === "mood" && <MoodRegistration />}
             </DialogContent>
