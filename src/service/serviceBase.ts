@@ -1,6 +1,6 @@
 import axios from "axios";
 const api = axios.create({
-  baseURL: "https://localhost:7192",
+  baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
 export const get = async <T>(url: string): Promise<T> => {
