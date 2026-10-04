@@ -14,6 +14,7 @@ import { Button } from "../ui/button";
 import { FormDialog } from "../Dialog";
 import { useState } from "react";
 import { EditActivityForm } from "./EditActivityForm";
+import { deleteActivity } from "../../service/activityService";
 
 type ActivityListItemProps = {
   activity: Activity;
@@ -25,6 +26,10 @@ export const ActivityListItem = ({
   refreshActivities,
 }: ActivityListItemProps) => {
   const [open, setOpen] = useState(false);
+  const handleDeleteActivity = async (activityId: number) => {
+    await deleteActivity(activityId);
+    refreshActivities();
+  };
   return (
     <TableRow>
       <TableCell className="font-medium">{activity.activityType}</TableCell>
@@ -49,7 +54,10 @@ export const ActivityListItem = ({
               Redigera
             </DropdownMenuItem>
 
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem
+              variant="destructive"
+              onClick={() => handleDeleteActivity(activity.id)}
+            >
               <Trash2 />
               Ta bort
             </DropdownMenuItem>
