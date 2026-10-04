@@ -1,7 +1,7 @@
 import { get, post, put, del } from "./serviceBase";
 import type { Sleep, CreateSleep } from "../types/Sleep";
 
-const sleepsUrl = "https://localhost:7192/api/sleep";
+const sleepsUrl = "/api/sleep";
 
 export const getSleeps = async (): Promise<Sleep[]> => {
     return await get<Sleep[]>(sleepsUrl);

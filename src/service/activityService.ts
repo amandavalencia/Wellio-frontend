@@ -1,7 +1,7 @@
 import { get, post, put, del } from "./serviceBase";
 import type { Activity, CreateActivity } from "../types/Activity";
 
-const activitiesUrl = "https://localhost:7192/api/activity";
+const activitiesUrl = "/api/activity";
 
 //tog bort try catch eftersom att jag ist kan hantera felmeddelandet i den komponent som gör anroppet istället för att här returnera felmeddelandet
 export const getActivities = async (): Promise<Activity[]> => {
