@@ -22,7 +22,15 @@ const links = [
 ];
 
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      onNavigate?.();
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
+  };
 
   return (
     <ul className="nav-links">
@@ -35,13 +43,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
       ))}
       <li className="border-t border-gray-300 mt-4 pt-4">
         {user ? (
-          <button
-            type="button"
-            onClick={() => {
-              console.log("Klickat på logga ut");
-              onNavigate?.();
-            }}
-          >
+          <button type="button" onClick={handleLogout}>
             Logga ut
           </button>
         ) : (

@@ -13,4 +13,7 @@ export const loginWithCookie = async (data: LoginRequest): Promise<void> => {
   },
   registerUser = async (data: LoginRequest): Promise<void> => {
     await post<void>("/api/auth/register", data);
+  },
+  logout = async (): Promise<void> => {
+    await post<void>("/api/auth/logout", {});
   };

@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext";
 import {
   getCurrentUser,
   loginWithCookie,
+  logout,
   registerUser,
 } from "../service/authService";
 
@@ -21,7 +22,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await registerUser({ email, password });
     await signIn(email, password);
   };
-
+  const signOut = async (): Promise<void> => {
+    await logout();
+    setUser(null);
+  };
   useEffect(() => {
     const loadUser = async () => {
       try {
@@ -39,7 +43,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signUp }}>
+    <AuthContext.Provider value={{ user, loading, signIn, signUp, signOut }}>
       {children}
     </AuthContext.Provider>
   );
