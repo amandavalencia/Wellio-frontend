@@ -1,9 +1,9 @@
 ﻿import { useAuth } from "../../hooks/useAuth";
 import "./Dashboard.css";
 import { DashboardHeader } from "./DashboardHeader";
-import { RegistrationCard } from "./registration/RegistrationCard";
-import { ActivityInsightsCard } from "./insights/ActivityInsightsCard";
+import { ActivityInsightsCard } from "../activities/ActivityInsightsCard";
 import { useActivities } from "../../hooks/useActivities";
+import { RegistrationCard } from "./RegistrationCard";
 
 type summariesType = {
   title: string;
@@ -45,7 +45,7 @@ const summaries: summariesType[] = [
 
 export function Dashboard() {
   const { user } = useAuth();
-  const { activities, handleActivityCreated } = useActivities();
+  const { activities, refreshActivities } = useActivities();
   return (
     <section className="dashboard" aria-labelledby="dashboard-title">
       {user && <DashboardHeader />}
@@ -53,7 +53,7 @@ export function Dashboard() {
         {summaries.map((summary) => (
           <RegistrationCard
             summary={summary}
-            onActivityCreated={handleActivityCreated}
+            refreshActivities={refreshActivities}
             key={summary.title}
           />
         ))}

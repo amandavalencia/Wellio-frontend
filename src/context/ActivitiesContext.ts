@@ -3,7 +3,7 @@ import type { Activity } from "../types/Activity";
 
 type ActivitiesContextType = {
   activities: Activity[];
-  handleActivityCreated: (activity: Activity) => void;
+  refreshActivities: () => Promise<void>;
 };
 
 export const ActivitiesContext = createContext<

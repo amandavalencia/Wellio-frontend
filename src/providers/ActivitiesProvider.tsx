@@ -23,12 +23,13 @@ export const ActivitiesProvider = ({
     fetchActivities();
   }, [loading, user]);
 
-  const handleActivityCreated = (activity: Activity) => {
-    setActivities((current) => [...current, activity]);
+  const refreshActivities = async () => {
+    const activities = await getActivities();
+    setActivities(activities);
   };
 
   return (
-    <ActivitiesContext.Provider value={{ activities, handleActivityCreated }}>
+    <ActivitiesContext.Provider value={{ activities, refreshActivities }}>
       {children}
     </ActivitiesContext.Provider>
   );
