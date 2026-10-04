@@ -16,7 +16,7 @@ const links = [
   { to: "/", label: "Översikt" },
   { to: "/mood", label: "Humör" },
   { to: "/sleep", label: "Sömn" },
-  { to: "/activity", label: "Aktivitet" },
+  { to: "/activity-overview", label: "Aktivitet" },
   { to: "/insights", label: "Insikter" },
   { to: "/settings", label: "Inställningar" },
 ];
@@ -35,14 +35,19 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
       ))}
       <li className="border-t border-gray-300 mt-4 pt-4">
         {user ? (
-          <button type="button" onClick={() => {
-            console.log("Klickat på logga ut");
-            onNavigate?.();
-          }}>
+          <button
+            type="button"
+            onClick={() => {
+              console.log("Klickat på logga ut");
+              onNavigate?.();
+            }}
+          >
             Logga ut
           </button>
         ) : (
-          <NavLink to="/login" onClick={onNavigate}>Logga in</NavLink>
+          <NavLink to="/login" onClick={onNavigate}>
+            Logga in
+          </NavLink>
         )}
       </li>
     </ul>
@@ -76,7 +81,13 @@ export const Nav = () => {
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
           <SheetTrigger asChild>
             <Button type="button" variant="outline" aria-label="Öppna meny">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                aria-hidden="true"
+              >
                 <path d="M4 6h16M4 12h16M4 18h16" />
               </svg>
               Meny
@@ -85,7 +96,9 @@ export const Nav = () => {
           <SheetContent side="left" className="overflow-y-auto">
             <SheetHeader>
               <SheetTitle>Meny</SheetTitle>
-              <SheetDescription className="sr-only">Navigera mellan Wellios sidor.</SheetDescription>
+              <SheetDescription className="sr-only">
+                Navigera mellan Wellios sidor.
+              </SheetDescription>
             </SheetHeader>
             <nav aria-label="Mobilnavigation" className="px-6 pb-6">
               <NavLinks onNavigate={() => setMenuOpen(false)} />
